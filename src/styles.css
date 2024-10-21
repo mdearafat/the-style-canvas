@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .active {
+    @apply bg-primary-600 text-white;
+  }
+}
