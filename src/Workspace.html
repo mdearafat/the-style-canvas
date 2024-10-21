@@ -217,26 +217,63 @@
         </div>
 
         <!-- Live Example Boxes -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <!-- Example 1 -->
-            <div class="bg-gray-100 text-center p-6 rounded-lg">
-                <p class="text-xl font-semibold text-gray-600">Example</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10">
+            <!-- Product Card -->
+            <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-md">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="Product Image" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">Product Name</h3>
+                <p class="text-gray-600 mt-2">This is a short description of the product that provides key details.</p>
+                <div class="mt-4">
+                    <span class="text-xl font-semibold text-gray-900">$29.99</span>
+                </div>
+                <button class="bg-purple-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-purple-700">Add to
+                    Cart</button>
             </div>
 
-            <!-- Example 2 -->
-            <div class="bg-gray-100 text-center p-6 rounded-lg">
-                <p class="text-xl font-semibold text-gray-600">Example</p>
+            <!-- Form Example -->
+            <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Contact Us</h3>
+                <form>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Name</label>
+                        <input type="text" class="w-full border border-gray-300 rounded-lg p-3"
+                            placeholder="Enter your name">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full border border-gray-300 rounded-lg p-3"
+                            placeholder="Enter your email">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Message</label>
+                        <textarea class="w-full border border-gray-300 rounded-lg p-3" rows="4"
+                            placeholder="Write your message"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700">Submit</button>
+                </form>
             </div>
 
-            <!-- Example 3 -->
-            <div class="bg-gray-100 text-center p-6 rounded-lg">
-                <p class="text-xl font-semibold text-gray-600">Example</p>
+            <!-- Button Showcase -->
+            <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Button Styles</h3>
+
+                <!-- Regular Button -->
+                <button class="bg-purple-600 text-white py-2 px-4 rounded-lg mb-4 w-full hover:bg-purple-700">Regular
+                    Button</button>
+
+                <!-- Active Button -->
+                <button class="bg-purple-700 text-white py-2 px-4 rounded-lg mb-4 w-full">Active Button</button>
+
+                <!-- Outline Button -->
+                <button
+                    class="border border-purple-600 text-purple-600 py-2 px-4 rounded-lg mb-4 w-full hover:bg-purple-100">Outline
+                    Button</button>
+
             </div>
 
-            <!-- Example 4 (Spanning two columns for desktop) -->
-            <div class="bg-gray-100 text-center p-6 rounded-lg col-span-1 md:col-span-3">
-                <p class="text-xl font-semibold text-gray-600">Example</p>
-            </div>
+
         </div>
     </section>
 
