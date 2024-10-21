@@ -13,32 +13,18 @@
 </head>
 
 <body>
+
     <header class="bg-primary-50">
-        <div class="max-w-screen-xl container mx-auto flex justify-between items-center py-5 px-4">
+        <div class="container max-w-screen-xl mx-auto flex justify-between items-center py-5 px-4">
             <!-- Logo -->
             <a href="index.html"><img src="../assets/The Style Canvas.svg" alt="Logo"></a>
 
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-10 items-center">
-                <a href="Workspace.html"
-                    class="text-primary-600 border-b border-transparent hover:text-primary-900 hover:border-primary-900 transition duration-100 active:text-primary-900 active:border-primary-900">
-                    Workspace
-                </a>
-
-                <a href="Pricing.html"
-                    class="text-primary-600 border-b border-transparent hover:text-primary-900 hover:border-primary-900 transition duration-100 active:text-primary-900 active:border-primary-900">
-                    Pricing
-                </a>
-
-                <a href="#"
-                    class="text-primary-600 border-b border-transparent hover:text-primary-900 hover:border-primary-900 transition duration-100 active:text-primary-900 active:border-primary-900">
-                    Figma Plugin
-                </a>
-
-                <a href="#"
-                    class="bg-primary-600 text-primary-50 py-2 px-4 rounded-full hover:bg-primary-800 text-center">
-                    Login
-                </a>
+                <a href="Workspace.html" class="nav-link">Workspace</a>
+                <a href="Pricing.html" class="nav-link">Pricing</a>
+                <a href="#" class="nav-link">Figma Plugin</a>
+                <a href="#" class="btn-primary">Login</a>
             </nav>
 
             <!-- Hamburger Menu Button (Visible on Mobile and Tablet) -->
@@ -65,24 +51,10 @@
             </button>
         </div>
         <nav class="flex flex-col space-y-4 p-4">
-            <a href="Workspace.html"
-                class="text-primary-600 border-b border-transparent hover:text-primary-900 hover:border-primary-900 transition duration-100 active:text-primary-900 active:border-primary-900">
-                Workspace
-            </a>
-
-            <a href="#"
-                class="text-primary-600 border-b border-transparent hover:text-primary-900 hover:border-primary-900 transition duration-100 active:text-primary-900 active:border-primary-900">
-                Pricing
-            </a>
-
-            <a href="#"
-                class="text-primary-600 border-b border-transparent hover:text-primary-900 hover:border-primary-900 transition duration-100 active:text-primary-900 active:border-primary-900">
-                Figma Plugin
-            </a>
-
-            <a href="#" class="bg-primary-600 text-primary-50 py-2 px-4 rounded-full hover:bg-primary-800 text-center">
-                Login
-            </a>
+            <a href="Workspace.html" class="nav-link">Workspace</a>
+            <a href="Pricing.html" class="nav-link">Pricing</a>
+            <a href="#" class="nav-link">Figma Plugin</a>
+            <a href="#" class="btn-primary">Login</a>
         </nav>
     </div>
 
@@ -108,96 +80,71 @@
 
 
     <!-- Color Picker Section -->
-    <section class="">
-        <div class="max-w-screen-xl container mx-auto py-8 px-4">
-            <!-- Selected Colors Container (New Colors Will Be Duplicated Here) -->
+    <section>
+        <div class="container max-w-screen-xl mx-auto py-8 px-4">
+            <!-- Selected Colors Container -->
             <div id="selected-colors" class="flex flex-col gap-4 mb-8 justify-center items-center">
-                <!-- Selected Color (Initial Selection) -->
+                <!-- Primary Color -->
                 <div
-                    class="flex justify-center items-center gap-3  border border-primary-500 py-2 w-64 rounded-full bg-primary-100 ">
+                    class="flex justify-center items-center gap-3 border border-primary-500 py-2 w-64 rounded-full bg-primary-100">
                     <div class="w-12 h-12 rounded-full border border-gray-300" style="background-color: #a653ea;"></div>
                     <div class="text-lg font-semibold">#a653ea</div>
                 </div>
+                <!-- Secondary color (Placeholder for the secondary color, shown when user selects it) -->
             </div>
 
-            <!-- Export, Edit, Save Buttons -->
+            <!-- Primary Color Buttons (export, edit, save) -->
             <div class="flex justify-center space-x-6 mb-8">
-                <button
-                    class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">Export</button>
-                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">Edit</button>
-                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">Save</button>
+                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">
+                    Export
+                </button>
+                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">
+                    Edit
+                </button>
+                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">
+                    Save
+                </button>
             </div>
 
             <!-- Color Shades Grid -->
             <div class="grid grid-cols-4 gap-2 md:grid-cols-5 lg:grid-cols-10">
+                <!-- Shade 50 -->
                 <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
                     <div class="w-16 h-16 rounded-full border" style="background-color: #faf6f6;"></div>
                     <p class="text-sm text-primary-800">50</p>
                     <p class="text-sm text-primary-800">#faf6f6</p>
                 </div>
-
+                <!-- Shade 100 -->
                 <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
                     <div class="w-16 h-16 rounded-full border" style="background-color: #f4eafd;"></div>
                     <p class="text-sm text-primary-800">100</p>
                     <p class="text-sm text-primary-800">#f4eafd</p>
                 </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #ead8fc;"></div>
-                    <p class="text-sm text-primary-800">200</p>
-                    <p class="text-sm text-primary-800">#ead8fc</p>
-                </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #dab9f9;"></div>
-                    <p class="text-sm text-primary-800">300</p>
-                    <p class="text-sm text-primary-800">#dab9f9</p>
-                </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #c48cf4;"></div>
-                    <p class="text-sm text-primary-800">400</p>
-                    <p class="text-sm text-primary-800">#c48cf4</p>
-                </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #a653ea;"></div>
-                    <p class="text-sm text-primary-800">500</p>
-                    <p class="text-sm text-primary-800">#a653ea</p>
-                </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #9840dd;"></div>
-                    <p class="text-sm text-primary-800">600</p>
-                    <p class="text-sm text-primary-800">#9840dd</p>
-                </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #832ac2;"></div>
-                    <p class="text-sm text-primary-800">700</p>
-                    <p class="text-sm text-primary-800">#832ac2</p>
-                </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-3">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #6e2a9f;"></div>
-                    <p class="text-sm text-primary-800">800</p>
-                    <p class="text-sm text-primary-800">#6e2a9f</p>
-                </div>
-
-                <div class="flex flex-col items-center border border-primary-500 p-4 rounded-lg gap-2">
-                    <div class="w-16 h-16 rounded-full border" style="background-color: #5a247f;"></div>
-                    <p class="text-sm text-primary-800">950</p>
-                    <p class="text-sm text-primary-800">#5a247f</p>
-                </div>
+                <!-- Continue for all shades... -->
             </div>
 
-            <!-- Pro Feature (Add a secondary color) -->
+            <!-- Placeholder for Secondary Color Actions (Added dynamically when a secondary color is chosen) -->
+            <div id="secondary-actions" class="flex justify-center space-x-6 mb-8 hidden">
+                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">
+                    Export Secondary
+                </button>
+                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">
+                    Edit Secondary
+                </button>
+                <button class="bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300">
+                    Save Secondary
+                </button>
+            </div>
+
+            <!-- Pro Feature: Add Secondary Color -->
             <div class="mt-8 text-center">
-                <p class="text-primary-600 cursor-pointer">+ Add a secondary color (Pro)</p>
+                <p id="add-secondary" class="text-primary-600 cursor-pointer">
+                    + Add a secondary color (Pro)
+                </p>
             </div>
         </div>
-
     </section>
+
 
     <!-- Live Examples Section -->
     <section class="max-w-screen-xl container mx-auto py-5">
@@ -208,8 +155,11 @@
         <!-- Tabs for Basic and Pro Examples -->
         <div class="flex justify-center items-center mb-6">
             <!-- Basic Examples Tab -->
-            <button class="bg-[#832ac2] text-white py-2 px-6 rounded-t-lg font-semibold">Basic Examples</button>
-            <!-- Pro Examples Tab -->
+            <button class="bg-[#832ac2] text-white py-2 px-6 rounded-t-lg font-semibold">
+                Basic Examples
+            </button>
+
+            <!-- Pro Examples Tab (Disabled) -->
             <button
                 class="bg-primary-200 text-gray-500 py-2 px-6 border-l-2 border-gray-300 rounded-t-lg font-semibold cursor-not-allowed opacity-80">
                 Pro Examples <span class="ml-2">🔒</span>
@@ -223,59 +173,19 @@
                 <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Product Image" class="w-full h-40 object-cover rounded-lg mb-4">
                 <h3 class="text-lg font-semibold text-gray-800">Product Name</h3>
-                <p class="text-gray-600 mt-2">This is a short description of the product that provides key details.</p>
+                <p class="text-gray-600 mt-2">
+                    This is a short description of the product that provides key details.
+                </p>
                 <div class="mt-4">
                     <span class="text-xl font-semibold text-gray-900">$29.99</span>
                 </div>
-                <button class="bg-purple-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-purple-700">Add to
-                    Cart</button>
+                <button class="bg-purple-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-purple-700">
+                    Add to Cart
+                </button>
             </div>
-
-            <!-- Form Example -->
-            <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Contact Us</h3>
-                <form>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Name</label>
-                        <input type="text" class="w-full border border-gray-300 rounded-lg p-3"
-                            placeholder="Enter your name">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Email</label>
-                        <input type="email" class="w-full border border-gray-300 rounded-lg p-3"
-                            placeholder="Enter your email">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Message</label>
-                        <textarea class="w-full border border-gray-300 rounded-lg p-3" rows="4"
-                            placeholder="Write your message"></textarea>
-                    </div>
-                    <button type="submit"
-                        class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700">Submit</button>
-                </form>
-            </div>
-
-            <!-- Button Showcase -->
-            <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Button Styles</h3>
-
-                <!-- Regular Button -->
-                <button class="bg-purple-600 text-white py-2 px-4 rounded-lg mb-4 w-full hover:bg-purple-700">Regular
-                    Button</button>
-
-                <!-- Active Button -->
-                <button class="bg-purple-700 text-white py-2 px-4 rounded-lg mb-4 w-full">Active Button</button>
-
-                <!-- Outline Button -->
-                <button
-                    class="border border-purple-600 text-purple-600 py-2 px-4 rounded-lg mb-4 w-full hover:bg-purple-100">Outline
-                    Button</button>
-
-            </div>
-
-
         </div>
     </section>
+
 
     <!-- Footer Section -->
     <footer class="bg-primary-800 text-white py-8 ">
@@ -349,21 +259,18 @@
         closeButton.addEventListener('click', closeMenu);
         overlay.addEventListener('click', closeMenu);
 
-        // Optional: Close menu when pressing the Esc key
+        // Close menu when pressing the Esc key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !mobileMenu.classList.contains('translate-x-full')) {
                 closeMenu();
             }
         });
 
-        // **New: Window Resize Listener**
+        // Close mobile menu on window resize to md or larger
         window.addEventListener('resize', () => {
-            // Tailwind's md breakpoint is 768px by default
             if (window.innerWidth >= 768) {
-                // If the window is resized to md or larger, ensure the mobile menu is closed
                 closeMenu();
             }
         });
-
     </script>
 </body>

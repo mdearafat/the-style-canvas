@@ -2,8 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .active {
-    @apply bg-primary-600 text-white;
-  }
+.nav-link {
+  @apply text-primary-600 border-b border-transparent hover:text-primary-900 hover:border-primary-900 transition duration-100 active:text-primary-900;
+}
+
+.btn-primary {
+  @apply bg-primary-600 text-primary-50 py-2 px-6 rounded-full hover:bg-primary-800 text-center;
+}
+
+.active {
+  @apply bg-primary-600 text-white;
+}
+.footer-link {
+  @apply text-gray-400 hover:text-white transition-colors duration-150;
 }
