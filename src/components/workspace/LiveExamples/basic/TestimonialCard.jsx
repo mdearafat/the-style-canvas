@@ -1,46 +1,120 @@
+import { Quote } from "lucide-react";
+import { useColorTooltip } from "@/hooks/useColorTooltip";
+import ColorTooltip from "../../ColorTooltip";
+
 export default function TestimonialCard({ colorShades }) {
+  const { tooltipInfo, handleColorHover, handleMouseLeave } = useColorTooltip();
   const getShade = (shade) => colorShades.find((s) => s.shade === shade)?.hex;
 
   return (
-    <div
-      className="rounded-xl p-6 relative"
-      style={{ backgroundColor: getShade(50) }}
-    >
-      <div
-        className="absolute top-6 left-6 w-10 h-10 rounded-full flex items-center justify-center"
-        style={{ backgroundColor: getShade(100) }}
-      >
-        <svg
-          className="w-6 h-6"
-          style={{ color: getShade(600) }}
-          viewBox="0 0 24 24"
-          fill="currentColor"
+    <div className="relative color-tooltip-container w-full">
+      {tooltipInfo && (
+        <ColorTooltip
+          shade={tooltipInfo.shade}
+          colorInfo={tooltipInfo.colorInfo}
+          type={tooltipInfo.type}
+          style={{
+            position: "absolute",
+            top: tooltipInfo.position.top - 40,
+            left: tooltipInfo.position.left,
+            transform: "translateX(-50%)",
+          }}
+        />
+      )}
+
+      <div className="rounded-2xl overflow-hidden bg-white shadow-md">
+        <div
+          className="h-24 relative"
+          style={{
+            background: `linear-gradient(to right, ${getShade(400)}, ${getShade(
+              500
+            )})`,
+          }}
+          onMouseEnter={(e) =>
+            handleColorHover("400-500", "background", e, {
+              colorName: "primary",
+              hex: getShade(400),
+            })
+          }
+          onMouseLeave={handleMouseLeave}
         >
-          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-        </svg>
-      </div>
-      <div className="ml-16">
-        <p
-          className="text-lg mb-4 font-medium"
-          style={{ color: getShade(700) }}
-        >
-          "This product has completely transformed how I work. The interface is
-          intuitive and the features are exactly what I needed."
-        </p>
-        <div className="flex items-center">
           <div
-            className="w-12 h-12 rounded-full bg-cover bg-center"
+            className="absolute -bottom-8 left-6 w-16 h-16 rounded-2xl shadow-lg bg-cover bg-center border-4 border-white"
             style={{
-              backgroundImage: "url(https://placehold.co/100x100)",
+              backgroundImage: "url(https://placehold.co/200x200)",
             }}
           />
-          <div className="ml-3">
-            <h4 className="font-semibold" style={{ color: getShade(900) }}>
-              Sarah Johnson
-            </h4>
-            <p className="text-sm" style={{ color: getShade(600) }}>
-              Design Lead, Acme Inc
+        </div>
+
+        <div className="pt-10 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h4
+                className="font-semibold text-lg"
+                style={{ color: getShade(900) }}
+                onMouseEnter={(e) =>
+                  handleColorHover(900, "text", e, {
+                    colorName: "primary",
+                    hex: getShade(900),
+                  })
+                }
+                onMouseLeave={handleMouseLeave}
+              >
+                Sarah Johnson
+              </h4>
+              <p className="text-gray-600">Design Lead, Acme Inc</p>
+            </div>
+            <div
+              className="w-10 h-10 rounded-full flex items-center justify-center opacity-75"
+              style={{ backgroundColor: getShade(100) }}
+              onMouseEnter={(e) =>
+                handleColorHover(100, "background", e, {
+                  colorName: "primary",
+                  hex: getShade(100),
+                })
+              }
+              onMouseLeave={handleMouseLeave}
+            >
+              <Quote className="w-5 h-5" style={{ color: getShade(600) }} />
+            </div>
+          </div>
+
+          <div
+            className="p-4 rounded-xl mb-4"
+            style={{ backgroundColor: getShade(50) }}
+            onMouseEnter={(e) =>
+              handleColorHover(50, "background", e, {
+                colorName: "primary",
+                hex: getShade(50),
+              })
+            }
+            onMouseLeave={handleMouseLeave}
+          >
+            <p className="text-gray-600 leading-relaxed">
+              "This product has completely transformed how I work. The interface
+              is intuitive, and the features are exactly what I needed for my
+              daily workflow."
             </p>
+          </div>
+
+          <div className="flex items-center gap-1">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="w-8 h-1.5 rounded-full"
+                style={{
+                  backgroundColor: i < 4 ? getShade(400) : getShade(100),
+                }}
+                onMouseEnter={(e) =>
+                  handleColorHover(i < 4 ? 400 : 100, "background", e, {
+                    colorName: "primary",
+                    hex: getShade(i < 4 ? 400 : 100),
+                  })
+                }
+                onMouseLeave={handleMouseLeave}
+              />
+            ))}
+            <span className="ml-2 text-sm text-gray-500">4.0</span>
           </div>
         </div>
       </div>
