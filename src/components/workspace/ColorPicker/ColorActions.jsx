@@ -9,13 +9,16 @@ export default function ColorActions({
 }) {
   // Temporarily disabled for development
   // const [showProModal, setShowProModal] = useState(false);
+  const [editText, setEditText] = useState("Edit");
 
   const handleProFeatureClick = (e) => {
     e.preventDefault();
     // Temporarily call the actual functions instead of showing modal
-    if (e.currentTarget.textContent.trim() === "Edit") {
+    const buttonText = e.currentTarget.textContent.trim();
+    if (buttonText === "Edit" || buttonText === "Done") {
       onToggleEdit();
-    } else if (e.currentTarget.textContent.trim() === "Save") {
+      setEditText(buttonText === "Edit" ? "Done" : "Edit");
+    } else if (buttonText === "Save") {
       onSave();
     }
   };
@@ -41,7 +44,7 @@ export default function ColorActions({
           onClick={handleProFeatureClick}
           className="group relative bg-primary-200 text-primary-700 py-2 px-6 rounded-lg hover:bg-primary-300 flex items-center gap-2"
         >
-          Edit
+          {editText}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

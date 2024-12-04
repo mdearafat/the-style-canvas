@@ -20,6 +20,17 @@ export default function ButtonShowcase({ colorShades }) {
         color: "white",
         opacity: state === "Disabled" ? 0.5 : 1,
       }),
+      getTooltipInfo: (state) => ({
+        shade:
+          state === "Disabled"
+            ? 200
+            : state === "Active"
+            ? 700
+            : state === "Hover"
+            ? 600
+            : 500,
+        type: "background",
+      }),
     },
     {
       title: "Buttons · Outline",
@@ -31,6 +42,19 @@ export default function ButtonShowcase({ colorShades }) {
           state === "Disabled" ? getShade(200) : getShade(500)
         }`,
         opacity: state === "Disabled" ? 0.5 : 1,
+      }),
+      getTooltipInfo: (state) => ({
+        shades: [
+          {
+            shade: state === "Disabled" ? 300 : 500,
+            type: "text",
+          },
+          {
+            shade: state === "Disabled" ? 200 : 500,
+            type: "border",
+          },
+          ...(state === "Hover" ? [{ shade: 50, type: "background" }] : []),
+        ],
       }),
     },
     {
@@ -49,6 +73,10 @@ export default function ButtonShowcase({ colorShades }) {
             : state === "Disabled"
             ? "none"
             : "0 4px 12px rgba(0, 0, 0, 0.15)",
+      }),
+      getTooltipInfo: (state) => ({
+        shade: state === "Disabled" ? 200 : "500-600",
+        type: state === "Disabled" ? "background" : "gradient",
       }),
     },
   ];
@@ -73,32 +101,49 @@ export default function ButtonShowcase({ colorShades }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {buttonStyles.map((style) => (
             <div key={style.type} className="space-y-4">
-              <h3 className="font-medium text-gray-900 mb-6">{style.title}</h3>
+              <h3
+                className="font-medium mb-6"
+                style={{ color: getShade(900) }}
+                onMouseEnter={(e) =>
+                  handleColorHover(900, "text", e, {
+                    colorName: "primary",
+                    hex: getShade(900),
+                  })
+                }
+                onMouseLeave={handleMouseLeave}
+              >
+                {style.title}
+              </h3>
               {buttonStates.map((state) => (
                 <button
                   key={state}
                   className={`
                     w-full py-2.5 px-4 rounded-lg font-medium transition-all
-                    ${
-                      state === "Disabled"
-                        ? "cursor-not-allowed"
-                        : "cursor-pointer"
-                    }
+                    ${state === "Disabled" ? "opacity-50" : ""}
                   `}
                   style={style.getStyles(state)}
-                  disabled={state === "Disabled"}
                   onMouseEnter={(e) => {
-                    if (state !== "Disabled") {
-                      let shadeInfo =
-                        style.type === "flat"
-                          ? { shade: 500, type: "background" }
-                          : style.type === "outline"
-                          ? { shade: 500, type: "border" }
-                          : { shade: "500-600", type: "gradient" };
+                    const tooltipInfo = style.getTooltipInfo(state);
 
-                      handleColorHover(shadeInfo.shade, shadeInfo.type, e, {
+                    if (tooltipInfo.shades) {
+                      // Multiple colors for outline buttons
+                      tooltipInfo.shades.forEach(({ shade, type }) => {
+                        handleColorHover(shade, type, e, {
+                          colorName: "primary",
+                          hex: getShade(
+                            Array.isArray(shade) ? shade[0] : shade
+                          ),
+                        });
+                      });
+                    } else {
+                      // Single color for other buttons
+                      handleColorHover(tooltipInfo.shade, tooltipInfo.type, e, {
                         colorName: "primary",
-                        hex: getShade(500),
+                        hex: getShade(
+                          Array.isArray(tooltipInfo.shade)
+                            ? tooltipInfo.shade[0]
+                            : tooltipInfo.shade
+                        ),
                       });
                     }
                   }}

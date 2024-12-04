@@ -21,6 +21,14 @@ export default function WorkspacePage() {
   const [secondaryColor, setSecondaryColor] = useState(null);
   const [secondaryShades, setSecondaryShades] = useState([]);
 
+  // Typography state
+  const [typographySettings, setTypographySettings] = useState({
+    baseSize: 16,
+    scale: "1.200",
+    fontFamily: "Inter",
+    textStyles: {},
+  });
+
   // Generate initial random color only once on mount
   useEffect(() => {
     const initialColor = getRandomColor();
@@ -69,7 +77,10 @@ export default function WorkspacePage() {
           onAddSecondary={handleAddSecondary}
         />
       ) : (
-        <Typography />
+        <Typography
+          settings={typographySettings}
+          setSettings={setTypographySettings}
+        />
       )}
 
       <LiveExamples
