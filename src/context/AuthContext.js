@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { supabase } from "@/lib/supabase";
 
 const AuthContext = createContext({});
 
@@ -9,26 +9,17 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isProUser, setIsProUser] = useState(false);
   const [loading, setLoading] = useState(true);
-  const supabase = createClientComponentClient();
 
   useEffect(() => {
+    // Initial session check
     const initializeAuth = async () => {
       try {
-        // Get initial session
         const {
           data: { session },
         } = await supabase.auth.getSession();
-
-        if (session?.user) {
+        if (session) {
           setUser(session.user);
-          // Check if user is pro by querying profiles table
-          const { data: profile } = await supabase
-            .from("profiles")
-            .select("is_pro")
-            .eq("id", session.user.id)
-            .single();
-
-          setIsProUser(profile?.is_pro || false);
+          await checkUserStatus(session.user.id);
         }
       } catch (error) {
         console.error("Error initializing auth:", error);
@@ -39,22 +30,14 @@ export const AuthProvider = ({ children }) => {
 
     initializeAuth();
 
-    // Set up auth state change listener
+    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log("Auth state changed:", event, session?.user?.email);
-
-      if (session?.user) {
+      if (session) {
         setUser(session.user);
-        // Update pro status on auth state change
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("is_pro")
-          .eq("id", session.user.id)
-          .single();
-
-        setIsProUser(profile?.is_pro || false);
+        await checkUserStatus(session.user.id);
       } else {
         setUser(null);
         setIsProUser(false);
@@ -62,23 +45,71 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     });
 
-    // Cleanup subscription
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
+
+  const checkUserStatus = async (userId) => {
+    try {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("is_pro")
+        .eq("id", userId)
+        .single();
+
+      if (error) throw error;
+
+      console.log("Profile status:", profile); // Debug log
+      setIsProUser(profile?.is_pro || false);
+    } catch (error) {
+      console.error("Error checking pro status:", error);
+      setIsProUser(false);
+    }
+  };
+
+  const refreshUser = async () => {
+    try {
+      if (!user) return;
+
+      // First refresh the session
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+      if (sessionError) throw sessionError;
+
+      if (!session) {
+        console.error("No session found during refresh");
+        return;
+      }
+
+      // Update user state
+      setUser(session.user);
+
+      // Check pro status
+      await checkUserStatus(session.user.id);
+
+      console.log("User refreshed successfully"); // Debug log
+    } catch (error) {
+      console.error("Error in refreshUser:", error);
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ user, isProUser, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isProUser,
+        loading,
+        refreshUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
+  return useContext(AuthContext);
 };
