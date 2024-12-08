@@ -37,7 +37,12 @@ export default function HeaderActions() {
         {user ? (
           <>
             {isProUser ? (
-              <span className="text-primary-600 font-medium">Pro User</span>
+              <span className="relative">
+                <span className="absolute inset-0 animate-pulse-glow bg-primary-400/30 blur-lg rounded-lg"></span>
+                <span className="relative px-3 py-1 text-primary-600 font-semibold bg-primary-50 rounded-lg border border-primary-200">
+                  Pro User
+                </span>
+              </span>
             ) : (
               <Link
                 href="/pricing"

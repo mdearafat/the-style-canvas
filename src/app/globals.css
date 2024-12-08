@@ -2,24 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-poppins: var(--font-poppins);
+@layer base {
+  :root {
+    --font-poppins: var(--font-poppins);
+  }
 }
 
 @layer components {
-  .nav-link {
-    @apply text-gray-600 hover:text-primary-600 transition-colors;
-  }
-
   .btn-primary {
-    @apply bg-primary-600 text-white px-6 py-2 rounded-full hover:bg-primary-700 transition-colors;
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg shadow-sm transition-colors duration-200;
   }
-  .active {
-    @apply bg-primary-600 text-white;
+}
+
+@keyframes pulse-glow {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.95);
   }
-  .footer-link {
-    @apply text-gray-400 hover:text-white transition-colors;
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
   }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 @keyframes fadeIn {
