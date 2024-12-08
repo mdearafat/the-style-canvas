@@ -6,7 +6,7 @@ import { useAuth } from "@/src/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, isProUser } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -78,8 +78,12 @@ export default function ProfilePage() {
               </p>
               <p>
                 <span className="text-gray-600">Account Type:</span>{" "}
-                <span className="font-medium capitalize">
-                  {user?.is_pro ? "Pro" : "Free"}
+                <span
+                  className={`font-medium capitalize ${
+                    isProUser ? "text-primary-600" : ""
+                  }`}
+                >
+                  {isProUser ? "Pro" : "Free"}
                 </span>
               </p>
             </div>
