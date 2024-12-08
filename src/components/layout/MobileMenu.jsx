@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/src/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 

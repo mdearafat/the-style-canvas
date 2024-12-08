@@ -1,7 +1,7 @@
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/src/context/AuthContext";
 import { Poppins } from "next/font/google";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Header from "@/src/components/layout/Header";
+import Footer from "@/src/components/layout/Footer";
 import "./globals.css";
 
 const poppins = Poppins({

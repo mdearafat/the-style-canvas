@@ -91,9 +91,9 @@ export default function TestimonialCard({ colorShades }) {
             onMouseLeave={handleMouseLeave}
           >
             <p className="text-gray-600 leading-relaxed">
-              "This product has completely transformed how I work. The interface
-              is intuitive, and the features are exactly what I needed for my
-              daily workflow."
+              &ldquo;This product has completely transformed how I work. The
+              interface is intuitive, and the features are exactly what I needed
+              for my daily workflow.&rdquo;
             </p>
           </div>
 

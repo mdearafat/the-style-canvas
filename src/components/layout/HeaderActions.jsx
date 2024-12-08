@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/src/context/AuthContext";
 import UserMenu from "./UserMenu";
 import { useState } from "react";
 import MobileMenu from "./MobileMenu";

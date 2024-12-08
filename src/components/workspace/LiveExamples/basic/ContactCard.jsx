@@ -86,7 +86,7 @@ export default function ContactCard({ colorShades }) {
               Get in Touch
             </h3>
             <p className="text-gray-600">
-              Have questions? We're here to help you.
+              Have questions? We&apos;re here to help you.
             </p>
           </div>
 

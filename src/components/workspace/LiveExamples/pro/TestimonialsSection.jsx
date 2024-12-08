@@ -173,7 +173,7 @@ export default function TestimonialsSection({
                   }}
                   onMouseLeave={handleMouseLeave}
                 >
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </p>
 
                 {/* Author */}

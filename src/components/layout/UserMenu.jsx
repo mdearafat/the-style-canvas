@@ -2,7 +2,7 @@
 
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/src/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
