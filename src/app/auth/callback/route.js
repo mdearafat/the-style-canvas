@@ -12,5 +12,6 @@ export async function GET(request) {
   }
 
   // URL to redirect to after sign in process completes
-  return NextResponse.redirect(new URL("/workspace", requestUrl.origin));
+  const redirectTo = new URL("/workspace", process.env.NEXT_PUBLIC_SITE_URL);
+  return NextResponse.redirect(redirectTo);
 }

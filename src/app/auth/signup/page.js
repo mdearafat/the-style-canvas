@@ -13,6 +13,7 @@ export default function SignUpPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
 
   const handleSignUp = async (e) => {
@@ -38,16 +39,17 @@ export default function SignUpPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
         },
       });
 
       if (error) throw error;
 
-      // Redirect to login with success message
-      router.push(
-        "/auth/login?message=Check your email to confirm your account"
-      );
+      // Show success message
+      setSuccess(true);
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (error) {
       console.error("Sign up error:", error);
       setError(error.message);
@@ -55,6 +57,58 @@ export default function SignUpPage() {
       setLoading(false);
     }
   };
+
+  if (success) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center px-4">
+        <div className="max-w-md w-full space-y-8">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center space-y-6">
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+              <svg
+                className="h-6 w-6 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900">
+              Check your email
+            </h3>
+            <div className="text-gray-600 space-y-4">
+              <p>
+                We&apos;ve sent a confirmation link to <strong>{email}</strong>
+              </p>
+              <p className="text-sm">
+                Click the link in your email to verify your account and complete
+                the sign-up process.
+              </p>
+            </div>
+            <div className="pt-4 border-t border-gray-200">
+              <p className="text-sm text-gray-500 mb-4">
+                Didn&apos;t receive the email? Check your spam folder or contact
+                support@stylecanvas.com
+              </p>
+            </div>
+            <div className="mt-6">
+              <Link
+                href="/auth/login"
+                className="text-sm text-gray-600 hover:text-gray-900"
+              >
+                ← Back to login
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">

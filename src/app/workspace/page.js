@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/src/context/AuthContext";
 import ColorPicker from "@/src/components/workspace/ColorPicker";
@@ -9,7 +9,8 @@ import TabSection from "@/src/components/workspace/TabSection";
 import Typography from "@/src/components/workspace/Typography";
 import { generateColorShades, getRandomColor } from "@/src/utils/colorUtils";
 
-export default function WorkspacePage() {
+// Separate component for content that uses useSearchParams
+function WorkspaceContent() {
   const searchParams = useSearchParams();
   const { user, refreshUser } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
@@ -251,5 +252,13 @@ export default function WorkspacePage() {
         />
       )}
     </main>
+  );
+}
+
+export default function WorkspacePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WorkspaceContent />
+    </Suspense>
   );
 }

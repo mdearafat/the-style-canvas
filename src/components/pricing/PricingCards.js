@@ -17,8 +17,12 @@ export default function PricingCards() {
     }
 
     try {
-      const response = await fetch("/api/create-checkout", {
+      const response = await fetch("/api/stripe/create-checkout", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user }),
       });
       const data = await response.json();
 
@@ -89,8 +93,6 @@ export default function PricingCards() {
 
       {/* Pro Plan */}
       <div className="relative bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl shadow-xl overflow-hidden">
-        {/* Highlight marker */}
-
         <div className="p-8">
           <h3 className="text-2xl font-semibold text-white mb-4">Pro</h3>
           <div className="flex items-baseline mb-8">

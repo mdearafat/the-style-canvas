@@ -10,19 +10,82 @@ export const AuthProvider = ({ children }) => {
   const [isProUser, setIsProUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const checkUserStatus = async (userId, userEmail) => {
+    if (!userId || !userEmail) {
+      console.log("Missing user info for status check", { userId, userEmail });
+      setIsProUser(false);
+      return;
+    }
+
+    try {
+      console.log("Checking pro status for user:", userId);
+
+      // First check if profile exists
+      const { data: profiles, error: checkError } = await supabase
+        .from("profiles")
+        .select("id, is_pro, email")
+        .eq("id", userId);
+
+      if (checkError) {
+        console.error("Error checking profile:", checkError.message);
+        throw checkError;
+      }
+
+      // If no profile exists, create one
+      if (!profiles || profiles.length === 0) {
+        console.log("Creating new profile for user:", userId);
+        const { error: insertError } = await supabase.from("profiles").insert([
+          {
+            id: userId,
+            email: userEmail,
+            is_pro: false,
+          },
+        ]);
+
+        if (insertError) {
+          console.error("Error creating profile:", insertError.message);
+          throw insertError;
+        }
+
+        setIsProUser(false);
+        return;
+      }
+
+      // If multiple profiles exist (shouldn't happen), use the first one
+      const profile = profiles[0];
+      console.log("Profile found:", profile);
+      setIsProUser(profile.is_pro || false);
+    } catch (error) {
+      console.error("Error in checkUserStatus:", {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+      });
+      setIsProUser(false);
+    }
+  };
+
   useEffect(() => {
-    // Initial session check
     const initializeAuth = async () => {
       try {
+        console.log("Initializing auth...");
         const {
           data: { session },
         } = await supabase.auth.getSession();
-        if (session) {
+
+        if (session?.user) {
+          console.log("Session found for user:", session.user.email);
           setUser(session.user);
-          await checkUserStatus(session.user.id);
+          await checkUserStatus(session.user.id, session.user.email);
+        } else {
+          console.log("No session found");
+          setUser(null);
+          setIsProUser(false);
         }
       } catch (error) {
-        console.error("Error initializing auth:", error);
+        console.error("Error initializing auth:", error.message);
+        setUser(null);
+        setIsProUser(false);
       } finally {
         setLoading(false);
       }
@@ -30,18 +93,22 @@ export const AuthProvider = ({ children }) => {
 
     initializeAuth();
 
-    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log("Auth state changed:", event, session?.user?.email);
-      if (session) {
-        setUser(session.user);
-        await checkUserStatus(session.user.id);
-      } else {
+
+      if (event === "SIGNED_OUT") {
+        console.log("User signed out, clearing state");
         setUser(null);
         setIsProUser(false);
+        localStorage.clear();
+      } else if (session?.user) {
+        console.log("User session updated:", session.user.email);
+        setUser(session.user);
+        await checkUserStatus(session.user.id, session.user.email);
       }
+
       setLoading(false);
     });
 
@@ -50,49 +117,48 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const checkUserStatus = async (userId) => {
-    try {
-      const { data: profile, error } = await supabase
-        .from("profiles")
-        .select("is_pro")
-        .eq("id", userId)
-        .single();
-
-      if (error) throw error;
-
-      console.log("Profile status:", profile); // Debug log
-      setIsProUser(profile?.is_pro || false);
-    } catch (error) {
-      console.error("Error checking pro status:", error);
-      setIsProUser(false);
-    }
-  };
-
   const refreshUser = async () => {
     try {
-      if (!user) return;
+      setLoading(true);
+      console.log("Refreshing user session...");
 
-      // First refresh the session
       const {
         data: { session },
         error: sessionError,
       } = await supabase.auth.getSession();
-      if (sessionError) throw sessionError;
 
-      if (!session) {
-        console.error("No session found during refresh");
-        return;
+      if (sessionError) {
+        console.error("Session refresh error:", sessionError.message);
+        throw sessionError;
       }
 
-      // Update user state
-      setUser(session.user);
-
-      // Check pro status
-      await checkUserStatus(session.user.id);
-
-      console.log("User refreshed successfully"); // Debug log
+      if (session?.user) {
+        console.log("Session refreshed for user:", session.user.email);
+        setUser(session.user);
+        await checkUserStatus(session.user.id, session.user.email);
+      } else {
+        console.log("No session found during refresh");
+        setUser(null);
+        setIsProUser(false);
+      }
     } catch (error) {
-      console.error("Error in refreshUser:", error);
+      console.error("Error in refreshUser:", error.message);
+      setUser(null);
+      setIsProUser(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+      setIsProUser(false);
+      localStorage.removeItem("supabase.auth.token");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      throw error;
     }
   };
 
@@ -103,6 +169,7 @@ export const AuthProvider = ({ children }) => {
         isProUser,
         loading,
         refreshUser,
+        signOut,
       }}
     >
       {children}

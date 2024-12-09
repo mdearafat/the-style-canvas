@@ -12,14 +12,30 @@ export default function UserMenu() {
 
   const handleSignOut = async () => {
     try {
+      // Clear local storage
+      localStorage.clear();
+
+      // Sign out from Supabase
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      router.push("/");
+
+      // Clear session cookies
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+
+      // Force refresh and redirect
       router.refresh();
+      router.push("/");
+      window.location.reload();
     } catch (error) {
       console.error("Error signing out:", error.message);
     }
   };
+
+  if (!user) return null;
 
   return (
     <Menu as="div" className="relative ml-3">
@@ -40,7 +56,7 @@ export default function UserMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[100]">
           <Menu.Item>
             {({ active }) => (
               <button
