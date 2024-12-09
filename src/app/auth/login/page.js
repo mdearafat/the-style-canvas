@@ -26,13 +26,9 @@ export default function LoginPage() {
 
       if (error) throw error;
 
-      // Get the redirect URL from query parameters or default to /workspace
-      const params = new URLSearchParams(window.location.search);
-      const redirectTo = params.get("redirect") || "/workspace";
-
-      // Force a refresh and redirect
+      // Always redirect to workspace after successful login
       router.refresh();
-      router.push(redirectTo);
+      router.push("/workspace");
     } catch (error) {
       console.error("Login error:", error);
       setError(error.message);
@@ -41,6 +37,12 @@ export default function LoginPage() {
     }
   };
 
+  // Get message from URL if any
+  const message =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("message")
+      : null;
+
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="max-w-md w-full space-y-8">
@@ -48,6 +50,12 @@ export default function LoginPage() {
           <h2 className="text-3xl font-bold">Welcome back</h2>
           <p className="mt-2 text-gray-600">Sign in to your account</p>
         </div>
+
+        {message && (
+          <div className="bg-green-50 text-green-700 p-3 rounded-lg text-center">
+            {message}
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-50 text-red-500 p-3 rounded-lg text-center">

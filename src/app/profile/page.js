@@ -16,7 +16,7 @@ export default function ProfilePage() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { user, refreshUser } = useAuth();
+  const { user } = useAuth();
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
@@ -44,6 +44,7 @@ export default function ProfilePage() {
 
       if (signInError) {
         setError("Current password is incorrect");
+        setLoading(false);
         return;
       }
 
@@ -54,18 +55,27 @@ export default function ProfilePage() {
 
       if (updateError) throw updateError;
 
-      // Clear form and show success message
+      // Clear form
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      setSuccess(true);
 
-      // Refresh the session
-      await refreshUser();
+      // Show loading for 2 seconds then success
+      setTimeout(() => {
+        setLoading(false);
+        setSuccess(true);
+
+        // Sign out after 1 more second
+        setTimeout(async () => {
+          await supabase.auth.signOut();
+          router.push(
+            "/auth/login?message=Password updated successfully. Please sign in with your new password"
+          );
+        }, 1000);
+      }, 2000);
     } catch (error) {
       console.error("Password update error:", error);
       setError(error.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -97,7 +107,7 @@ export default function ProfilePage() {
 
           {success && (
             <div className="mb-4 p-3 bg-green-50 text-green-600 rounded-lg">
-              Password updated successfully!
+              Password updated successfully! Signing you out...
             </div>
           )}
 
